@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Timeline studio</title>
+<script>try{var t=localStorage.getItem("tl-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="./base.css">
+<style>
+  #toolbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 6px 10px !important; gap: 6px !important; }
+  /* toolbar groups: Duplicate Delete | Curves | Undo Redo | Play clock */
+  #toolbar > :nth-child(3), #toolbar > :nth-child(4) { margin-left: 10px; position: relative; }
+  #toolbar > #studio-play { margin-left: 10px; }
+  #toolbar > :nth-child(3)::before, #toolbar > :nth-child(4)::before {
+    content: ""; position: absolute; left: -9px; top: 3px; bottom: 3px; width: 1px; background: var(--border-hi); }
+  #toolbar > #studio-play { background: var(--accent); border-color: var(--accent); color: #fff; min-width: 64px; font-weight: 600; }
+  #toolbar > #studio-play:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
+  #toolbar > #studio-play::before { content: "\25B6\00a0"; font-size: 9px; }
+  #toolbar > #add-delete::before { content: "\2715\00a0"; font-size: 10px; opacity: .7; }
+  #toolbar > #add-duplicate::before { content: "\29C9\00a0"; opacity: .7; }
+  #toolbar > span { color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 3px 8px; }
+  #side { background: var(--panel); padding: 0 !important; }
+  #side > section { border-bottom: 1px solid var(--border); }
+  #side h4 { position: sticky; top: 0; z-index: 1; margin: 0; padding: 8px 10px; background: var(--panel-2); border-bottom: 1px solid var(--border);
+    font: 600 var(--fs-s)/1.2 system-ui; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); cursor: pointer; user-select: none; }
+  #side h4:hover { color: var(--text); }
+  #side h4::before { content: "\25BE"; display: inline-block; width: 14px; transition: transform .12s; }
+  #side section.collapsed > h4::before { transform: rotate(-90deg); }
+  #side section.collapsed > :not(h4) { display: none !important; }
+  #side section > :not(h4) { margin-left: 10px !important; margin-right: 10px !important; }
+  #side section > h4 + * { margin-top: 8px; }
+  #side section > :last-child { margin-bottom: 10px; }
+
+  /* narrow: stack the panel under the timeline instead of squeezing the timeline to zero width */
+  @media (max-width: 720px) {
+    #main { flex-direction: column; }
+    #tl { flex: 1 1 55% !important; min-height: 200px; }
+    #side { flex: 0 0 40% !important; width: auto !important; border-left: 0 !important; border-top: 1px solid var(--border); }
+  }
+  #side ::-webkit-scrollbar-thumb { border-color: var(--panel); }
+</style></head>
+<body>
+  <div id="studio" style="display:flex;flex-direction:column;height:100vh">
+    <div id="toolbar" style="flex:none;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 8px;"></div>
+    <div id="main" style="flex:1;min-height:0;display:flex">
+      <div id="tl" style="flex:1;min-width:0"></div>
+      <div id="side" style="flex:none;width:300px;overflow:auto;border-left:1px solid var(--border);padding:8px;box-sizing:border-box"></div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("side").addEventListener("click", (e) => {
+      const h = e.target.closest && e.target.closest("h4");
+      if (h && h.parentElement.tagName === "SECTION") h.parentElement.classList.toggle("collapsed");
+    });
+  </script>
+  <script type="module" src="./studio.ts"></script>
+</body>
+</html>

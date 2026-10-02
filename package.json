@@ -1,0 +1,50 @@
+{
+  "name": "real-timeline-editor",
+  "version": "0.1.0",
+  "description": "Framework-agnostic web timeline / sequencer editor: tracks, clips, keys, curves, beat grid",
+  "license": "MIT",
+  "author": "Illia Komsa",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/v1vendi/real-timeline-editor.git"
+  },
+  "homepage": "https://github.com/v1vendi/real-timeline-editor#readme",
+  "bugs": "https://github.com/v1vendi/real-timeline-editor/issues",
+  "keywords": [
+    "timeline",
+    "sequencer",
+    "editor",
+    "keyframes",
+    "animation",
+    "curve-editor",
+    "canvas",
+    "lighting",
+    "dmx"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite demo",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "bench": "node demo/bench.mjs",
+    "check": "tsc --noEmit && vitest run",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.0"
+  }
+}
